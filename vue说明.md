@@ -211,3 +211,22 @@ jquery的引入比较特殊 => [vue-cli webpack 引入jquery](http://www.cnblogs
     Vue.prototype.common = common;
 ```
 这样的方式引入之后那么调用的时候只需要this.common就可以调用到了。
+## proxytable解决接口联调跨域问题
+``` 
+    config文件夹 -> index.js文件
+    dev下配置
+        env: require('./dev.env'),
+        port: 8081,
+        autoOpenBrowser: true,
+        assetsSubDirectory: 'static',
+        assetsPublicPath: '/',
+        proxyTable: {
+          '/api': {
+            target: 'http://***/api',
+            changeOrigin: true,
+            pathRewrite: {
+            '^/api': '/'
+            }
+          }
+      接口填写：
+      axios.post('api/vr-oauth-center/oauth/token', qs.stringify(data[0]))
